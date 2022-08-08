@@ -1,12 +1,15 @@
 import { User } from "@prisma/client";
 import client from "../config/database.js";
 
-export type UserSchemaSignUp = Omit<User, "id"> & { confirmPassword: string };
-export type UserSchemaSignIn = Omit<
+export type UserSchemaSignUp = Omit<
   User,
-  "id" | "name" | "weight" | "height" | "gender"
+  "id" | "gender" | "height" | "weight" | "activity"
+> & { confirmPassword: string };
+export type UserSchemaSignIn = Omit<
+  UserSchemaSignUp,
+  "name" | "confirmPassword"
 >;
-export type UserInsertData = Omit<User, "id">;
+export type UserInsertData = Omit<UserSchemaSignUp, "confirmPassword">;
 
 async function getUserById(id: number) {
   const foundUser = await client.user.findFirst({
@@ -30,9 +33,7 @@ async function getUserByEmail(email: string) {
 
 async function insert(userData: UserInsertData) {
   await client.user.create({
-    data: {
-      ...userData,
-    },
+    data: { ...userData },
   });
 }
 
