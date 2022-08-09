@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import {
-  UserInsertData,
   UserSchemaSignIn,
   UserSchemaSignUp,
 } from "../repositories/userRepository.js";

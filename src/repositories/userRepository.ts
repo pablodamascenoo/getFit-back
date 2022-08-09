@@ -10,6 +10,7 @@ export type UserSchemaSignIn = Omit<
   "name" | "confirmPassword"
 >;
 export type UserInsertData = Omit<UserSchemaSignUp, "confirmPassword">;
+export type UserSchemaInfo = Omit<User, "id" | "name" | "password" | "email">;
 
 async function getUserById(id: number) {
   const foundUser = await client.user.findFirst({
@@ -37,10 +38,22 @@ async function insert(userData: UserInsertData) {
   });
 }
 
+async function update(id: number, data: UserSchemaInfo) {
+  await client.user.update({
+    where: {
+      id,
+    },
+    data: {
+      ...data,
+    },
+  });
+}
+
 const userRepository = {
   insert,
   getUserById,
   getUserByEmail,
+  update,
 };
 
 export default userRepository;
