@@ -8,4 +8,6 @@ export const userInfoSchema = Joi.object<UserSchemaInfo>({
   gender: Joi.string().valid("male", "female").required(),
   height: Joi.number().integer().min(1).required(),
   weight: Joi.number().integer().min(1).required(),
+  age: Joi.number().integer().min(1).required(),
+  objective: Joi.string().valid("cut", "maintain", "bulk").required(),
 });

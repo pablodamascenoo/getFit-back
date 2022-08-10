@@ -3,7 +3,7 @@ import client from "../config/database.js";
 
 export type UserSchemaSignUp = Omit<
   User,
-  "id" | "gender" | "height" | "weight" | "activity"
+  "id" | "gender" | "height" | "weight" | "activity" | "age" | "objective"
 > & { confirmPassword: string };
 export type UserSchemaSignIn = Omit<
   UserSchemaSignUp,

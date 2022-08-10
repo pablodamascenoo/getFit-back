@@ -15,8 +15,10 @@ model User {
   name     String
   password String
   email    String   @unique
+  age Int?
   height   Int?
   weight   Int?
+  objective Objective?
   gender   Gender?
   activity Activity?
   Goal     Goal[]
@@ -24,12 +26,12 @@ model User {
   Meal     Meal[]
 
   @@map("users")
-} //TODO: fix create count
+}
 
 model Goal {
   id           Int  @id @default(autoincrement())
   user         User @relation(fields: [userId], references: [id])
-  userId       Int
+  userId       Int  @unique
   caloriesGoal Int  @default(2000)
   waterGoal    Int  @default(2000)
 
@@ -67,4 +69,10 @@ enum Activity {
   low
   moderate
   high
+}
+
+enum Objective{
+  cut
+  maintain
+  bulk
 }
