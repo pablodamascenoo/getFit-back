@@ -4,14 +4,17 @@ import goalRepository, {
 } from "../repositories/goalRepository.js";
 
 async function updateCaloriesGoal(goalData: caloriesGoalInsertData) {
-  await goalRepository.updateCaloriesGoal(
-    goalData.userId,
-    goalData.caloriesGoal
-  );
+  await goalRepository.upsertCaloriesGoal({
+    userId: goalData.userId,
+    caloriesGoal: goalData.caloriesGoal,
+  });
 }
 
 async function updateWaterGoal(goalData: waterGoalInsertData) {
-  await goalRepository.updateWaterGoal(goalData.userId, goalData.waterGoal);
+  await goalRepository.upsertWaterGoal({
+    userId: goalData.userId,
+    waterGoal: goalData.waterGoal,
+  });
 }
 
 const goalService = {

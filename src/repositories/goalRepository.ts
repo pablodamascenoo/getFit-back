@@ -4,38 +4,33 @@ import client from "../config/database.js";
 export type caloriesGoalInsertData = Omit<Goal, "id" | "waterGoal">;
 export type waterGoalInsertData = Omit<Goal, "id" | "caloriesGoal">;
 
-async function insert(goalData: caloriesGoalInsertData) {
-  await client.goal.create({
-    data: { ...goalData },
+async function upsertCaloriesGoal(goalData: caloriesGoalInsertData) {
+  await client.goal.upsert({
+    where: {
+      userId: goalData.userId,
+    },
+    update: {
+      caloriesGoal: goalData.caloriesGoal,
+    },
+    create: { ...goalData },
   });
 }
 
-async function updateCaloriesGoal(userId: number, caloriesGoal: number) {
-  await client.goal.update({
+async function upsertWaterGoal(goalData: waterGoalInsertData) {
+  await client.goal.upsert({
     where: {
-      userId,
+      userId: goalData.userId,
     },
-    data: {
-      caloriesGoal,
+    update: {
+      waterGoal: goalData.waterGoal,
     },
-  });
-}
-
-async function updateWaterGoal(userId: number, waterGoal: number) {
-  await client.goal.update({
-    where: {
-      userId,
-    },
-    data: {
-      waterGoal,
-    },
+    create: { ...goalData },
   });
 }
 
 const goalRepository = {
-  insert,
-  updateCaloriesGoal,
-  updateWaterGoal,
+  upsertCaloriesGoal,
+  upsertWaterGoal,
 };
 
 export default goalRepository;
