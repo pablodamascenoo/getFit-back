@@ -22,6 +22,21 @@ async function getUserById(id: number) {
   return foundUser;
 }
 
+async function getAllUserInfo(id: number) {
+  const foundUser = await client.user.findFirst({
+    where: {
+      id,
+    },
+    include: {
+      goal: {},
+      meal: {},
+      water: {},
+    },
+  });
+
+  return foundUser;
+}
+
 async function getUserByEmail(email: string) {
   const foundUser = await client.user.findFirst({
     where: {
@@ -50,6 +65,7 @@ async function update(id: number, data: UserSchemaInfo) {
 }
 
 const userRepository = {
+  getAllUserInfo,
   insert,
   getUserById,
   getUserByEmail,

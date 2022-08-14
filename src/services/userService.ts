@@ -34,11 +34,17 @@ async function updateUserInfo(userId: number, userData: UserSchemaInfo) {
   TMB = Math.round(TMB);
   const caloriesGoal = Math.round(TMB * objective[userData.objective]);
 
-  await goalRepository.insert({ userId, caloriesGoal });
+  await goalRepository.upsertCaloriesGoal({ userId, caloriesGoal });
   await userRepository.update(userId, userData);
 }
 
+async function getAllUserInfo(userId: number) {
+  const foundUser = await userRepository.getAllUserInfo(userId);
+  return foundUser;
+}
+
 const userService = {
+  getAllUserInfo,
   updateUserInfo,
 };
 

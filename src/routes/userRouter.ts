@@ -13,4 +13,6 @@ userRouter.post(
   userController.postUserInfo
 );
 
+userRouter.get("/user", verifyToken, userController.getUserInfo);
+
 export default userRouter;

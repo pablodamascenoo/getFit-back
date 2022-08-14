@@ -10,7 +10,15 @@ async function postUserInfo(req: Request, res: Response) {
   return res.sendStatus(200);
 }
 
+async function getUserInfo(req: Request, res: Response) {
+  const { id } = res.locals.user;
+
+  const userInfo = await userService.getAllUserInfo(id);
+  return res.send(userInfo);
+}
+
 const userController = {
+  getUserInfo,
   postUserInfo,
 };
 
