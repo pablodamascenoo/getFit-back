@@ -18,7 +18,8 @@ async function loginUser(userData: UserSchemaSignIn) {
   if (!foundUser) throw { status: 401, message: "invalid user/password" };
   comparePassword(userData.password, foundUser.password);
   const token = genToken(foundUser.id);
-  return token;
+  const userInfo = { token, name: foundUser.name };
+  return userInfo;
 }
 
 function cryptPassword(password: string) {
