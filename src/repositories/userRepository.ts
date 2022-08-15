@@ -26,8 +26,6 @@ async function getUserById(id: number) {
 async function getAllUserInfo(id: number) {
   const now = dayjs(dayjs().format("YYYY-MM-DD")).format();
   const tomorrow = dayjs(now).add(1, "day").format();
-  console.log(now);
-
   const foundUser = await client.user.findFirst({
     where: {
       id,
