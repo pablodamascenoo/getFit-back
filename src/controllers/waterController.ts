@@ -9,8 +9,17 @@ async function postWater(req: Request, res: Response) {
   return res.sendStatus(201);
 }
 
+async function deleteWater(req: Request, res: Response) {
+  const { id } = req.params;
+  const { user } = res.locals;
+
+  await waterService.deleteWater({ userId: user.id, id: parseInt(id) });
+  return res.sendStatus(200);
+}
+
 const waterController = {
   postWater,
+  deleteWater,
 };
 
 export default waterController;

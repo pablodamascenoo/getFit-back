@@ -1,5 +1,6 @@
 import { User } from "@prisma/client";
 import client from "../config/database.js";
+import dayjs from "dayjs";
 
 export type UserSchemaSignUp = Omit<
   User,
@@ -23,14 +24,32 @@ async function getUserById(id: number) {
 }
 
 async function getAllUserInfo(id: number) {
+  const now = dayjs(dayjs().format("YYYY-MM-DD")).format();
+  const tomorrow = dayjs(now).add(1, "day").format();
+  console.log(now);
+
   const foundUser = await client.user.findFirst({
     where: {
       id,
     },
     include: {
       goal: {},
-      meal: {},
-      water: {},
+      meal: {
+        where: {
+          createdAt: {
+            gte: now,
+            lt: tomorrow,
+          },
+        },
+      },
+      water: {
+        where: {
+          createdAt: {
+            gte: now,
+            lt: tomorrow,
+          },
+        },
+      },
     },
   });
 

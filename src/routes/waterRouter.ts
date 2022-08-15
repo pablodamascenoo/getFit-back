@@ -12,6 +12,7 @@ waterRouter.post(
   schemaValidator(waterSchema),
   waterController.postWater
 );
-waterRouter.get("/water", verifyToken);
+// waterRouter.get("/water", verifyToken);
+waterRouter.delete("/water/:id", verifyToken, waterController.deleteWater);
 
 export default waterRouter;
